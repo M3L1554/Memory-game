@@ -32,6 +32,7 @@ function shuffleArray(array) {
   }
 }
 
+//cards shuffle 
 function shuffle() {
   let array = memoryPictureUrls
   shuffleArray(array);
@@ -41,6 +42,7 @@ function shuffle() {
 }
 shuffle()
 
+//card flip (I think, I'm unsure ÓvÒ; )
 for (let index = 0; index < flipCard.length; index++) {
   flipCard[index].addEventListener("click", (data) => {
 
@@ -51,24 +53,44 @@ for (let index = 0; index < flipCard.length; index++) {
         console.log(firstClick.children[0].src)
         console.log(data.target.children[0].src)
 
+        //scoringboard 
         if(firstClick.children[0].src === data.target.children[0].src) {
-          firstClick ="";
+          
           data.target.classList.add("active");
           matches += 1;
           score += 1;
+          //Check marks
+          let check = document.createElement("i");
+          check.classList.add("fa-solid");
+          check.classList.add("fa-check");
+          data.target.appendChild(check);
+
+          let check2 = document.createElement("i");
+          check2.classList.add("fa-solid");
+          check2.classList.add("fa-check");
+
+          firstClick.appendChild(check2);
+          firstClick ="";
+          //confetti
           if(matches == 6){
             confetti.start()
           }
         } else {
-          firstClick.classList.remove("active");
-          firstClick ="";
+          data.target.classList.add("active");
           score -= 1;
+          //crad show timer
+          setTimeout((firstClick, data) => {
+            firstClick.classList.remove("active");
+            data.target.classList.remove("active");
+          }, 1000, firstClick, data);
+          firstClick ="";
         }
       }
       scoreElement.innerText = score;
   });
 }
 
+//reset
 function reset() {
   for (let index = 0; index < flipCard.length; index++) {
     flipCard[index].classList.remove("active");
